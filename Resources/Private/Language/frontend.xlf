@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" date="2018-11-23T08:00:00Z" product-name="ce_gallery">
+        <header/>
+        <body>
+            <trans-unit id="galleries_list" xml:space="preserve">
+                <source>List of galleries</source>
+            </trans-unit>
+            <trans-unit id="images_list" xml:space="preserve">
+                <source>List of Photos</source>
+            </trans-unit>
+            <trans-unit id="back_to_galleries" xml:space="preserve">
+                <source>Povratak na listu galerija</source>
+            </trans-unit>
+            <trans-unit id="webdescription" xml:space="preserve">
+                <source>Description</source>
+            </trans-unit>
+            <trans-unit id="main_asset" xml:space="preserve">
+                <source>Main gallery image</source>
+            </trans-unit>
+            <trans-unit id="main_asset.add" xml:space="preserve">
+                <source>Add</source>
+            </trans-unit>
+            <trans-unit id="mediaalbum" xml:space="preserve">
+                <source>VSPEP Media album</source>
+            </trans-unit>
+
+            <trans-unit id="dateFormat" xml:space="preserve">
+                <source>%d. %B %Y</source>
+            </trans-unit>
+            <trans-unit key="culture.monthNames.00" xml:space="preserve">
+                <source>Januarrr</source>
+            </trans-unit>
+            <trans-unit id="culture.monthNames.01" xml:space="preserve">
+                <source>Januar</source>
+            </trans-unit>
+            <trans-unit id="culture.monthNames.02" xml:space="preserve">
+                <source>Februar</source>
+            </trans-unit>
+            <trans-unit id="culture.monthNames.03" xml:space="preserve">
+                <source>Mart</source>
+            </trans-unit>
+            <trans-unit id="culture.monthNames.04" xml:space="preserve">
+                <source>April</source>
+            </trans-unit>
+            <trans-unit id="culture.monthNames.05" xml:space="preserve">
+                <source>Maj</source>
+            </trans-unit>
+            <trans-unit id="culture.monthNames.06" xml:space="preserve">
+                <source>Jun</source>
+            </trans-unit>
+            <trans-unit id="06" xml:space="preserve">
+                <source>Jun</source>
+            </trans-unit>
+            <trans-unit id="culture.monthNames.07" xml:space="preserve">
+                <source>Jul</source>
+            </trans-unit>
+            <trans-unit id="culture.monthNames.08" xml:space="preserve">
+                <source>August</source>
+            </trans-unit>
+            <trans-unit id="culture.monthNames.09" xml:space="preserve">
+                <source>Septembar</source>
+            </trans-unit>
+            <trans-unit id="culture.monthNames.10" xml:space="preserve">
+                <source>Oktobar</source>
+            </trans-unit>
+            <trans-unit id="culture.monthNames.11" xml:space="preserve">
+                <source>Novembar</source>
+            </trans-unit>
+            <trans-unit id="culture.monthNames.12" xml:space="preserve">
+                <source>Decembar</source>
+            </trans-unit>
+			
+        </body>
+    </file>
+</xliff>

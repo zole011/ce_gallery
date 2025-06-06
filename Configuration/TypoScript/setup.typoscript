@@ -1,0 +1,17 @@
+plugin.tx_filelist {
+  view {
+    partialRootPaths.100 = EXT:ce_gallery/Resources/Private/Partials/
+    widget {
+      TYPO3\CMS\Fluid\ViewHelpers\Widget\PaginateViewHelper {
+        templateRootPaths {
+          10 = {$plugin.tx_filelist.view.widget.templateRootPath}
+          // 10 = EXT:pep/Resources/Private/Fluid/Templates/
+        }
+        // templateRootPath = {$plugin.tx_filelist.view.widget.templateRootPath}
+      }
+    }
+  }
+  settings {
+    base64 = 1
+  }
+}

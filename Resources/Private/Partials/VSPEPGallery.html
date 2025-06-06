@@ -1,0 +1,23 @@
+<v:asset.style path="EXT:pep/Resources/Public/Plugins/lightgallery/css/lightgallery.min.css" name="lightgallery.min.css" />
+<v:asset.style path="EXT:pep/Resources/Public/Plugins/lightgallery/css/lg-transitions.min.css" name="lg-transitions.min.css" />
+<v:asset.script path="EXT:pep/Resources/Public/Plugins/lightgallery/js/lightgallery.min.js" name="lightgallery.min.js" />
+<v:asset.script path="EXT:pep/Resources/Public/Plugins/lightgallery/js/lg-thumbnail.min.js" name="lg-thumbnail.min.js" />
+<v:asset.script path="EXT:pep/Resources/Public/Plugins/lightgallery/js/lg-fullscreen.min.js" name="lg-fullscreen.min.js" />
+<v:asset.script path="EXT:pep/Resources/Public/Plugins/lightgallery/js/lg-zoom.min.js" name="lg-zoom.min.js" />
+<v:asset.script path="EXT:pep/Resources/Public/Plugins/lightgallery/js/lg-share.min.js" name="lg-share.min.js" />
+<v:asset.script path="EXT:pep/Resources/Public/Plugins/lightgallery/js/lg-pager.min.js" name="lg-pager.min.js" />
+<v:asset.script path="EXT:pep/Resources/Public/Plugins/lightgallery/js/lg-hash.min.js" name="lg-hash.min.js" />
+<v:asset.script path="EXT:pep/Resources/Public/Plugins/lightgallery/js/lg-autoplay.min.js" name="lg-autoplay.min.js" />
+<v:asset.script>
+  lightGallery(document.querySelector('.tx-filelist'), {
+    selector: '[rel^="lightbox["]',
+    thumbnail:true,
+    showThumbByDefault: true,
+    share: true,
+    facebook: true,
+    twitter: true,
+    googlePlus: false,
+    pinterest: true,
+    mode: 'lg-slide-skew',
+  });
+</v:asset.script>

@@ -1,0 +1,78 @@
+<extra>
+  <ROOT>
+    <TCEforms>
+      <sheetTitle>Advanced Gallery options</sheetTitle>
+    </TCEforms>
+    <type>array</type>
+    <el>
+      <settings.allowedExtensions>
+        <TCEforms>
+          <label>Allowed file types (extensions)</label>
+          <config>
+            <type>input</type>
+            <eval>trim</eval>
+            <size>15</size>
+            <default>jpeg, jpg, png, gif, webp</default>
+          </config>
+        </TCEforms>
+      </settings.allowedExtensions>
+      <settings.showFolderList>
+        <TCEforms>
+          <label>Folder list as galleries</label>
+          <description>Show folders as galleries, it doesn't show images in main folder only in subfolders.</description>
+          <displayCond>FIELD:sDEF.settings.includeSubfolders:=:1</displayCond>
+          <config>
+            <type>check</type>
+            <default>0</default>
+          </config>
+        </TCEforms>
+      </settings.showFolderList>
+<!--       <settings.showSlideshow>
+        <TCEforms>
+          <label>Show slideshow plugin on click</label>
+          <description>Show slideshow plugin immediatelly when clicking on the gallery folder. Otherwise user is shown new page with gallery grid and can then click on a picture to open the lightbox/slideshow.</description>
+          <displayCond>FIELD:sDEF.settings.includeSubfolders:=:1</displayCond>
+          <config>
+            <type>check</type>
+            <default>0</default>
+          </config>
+        </TCEforms>
+      </settings.showSlideshow> -->
+      <settings.slideShowType>
+        <TCEforms>
+          <label>Slideshow type</label>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">Simple gallery with lightbox</numIndex>
+                <numIndex index="1">simple</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">Advanced gallery plugin</numIndex>
+                <numIndex index="1">advanced</numIndex>
+              </numIndex>
+              <numIndex index="2" type="array">
+                <numIndex index="0">VSPEP Gallery</numIndex>
+                <numIndex index="1">VSPEPGallery</numIndex>
+              </numIndex>
+            </items>
+            <default>simple</default>
+          </config>
+        </TCEforms>
+      </settings.slideShowType>
+      <settings.paging>
+        <TCEforms>
+          <label>Enable paging feature</label>
+          <description>If the value is greater than 0 it will limit records displaying per page by that number. If the total number of record is less than chosen number, pager will not be shown.</description>
+          <config>
+            <type>input</type>
+            <eval>trim,int</eval>
+            <size>3</size>
+            <default>0</default>
+          </config>
+        </TCEforms>
+      </settings.paging>
+    </el>
+  </ROOT>
+</extra>

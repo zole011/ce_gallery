@@ -1,0 +1,56 @@
+{namespace fl=Causal\FileList\ViewHelpers}
+{f:variable(name: 'max', value: 20)}
+<div class="row text-center text-lg-left">
+  <f:if condition="{f:count(subject: files)} > {max}">
+    <f:then>
+      <f:widget.paginate objects="{files}" as="paginatedFiles" configuration="{itemsPerPage: '{max}', insertAbove: 0, insertBelow: 1, maximumNumberOfLinks: 10}">
+        <f:for each="{paginatedFiles}" as="file">
+          <f:render section="item" arguments="{file: file, data: data}" />
+        </f:for>
+      </f:widget.paginate>
+    </f:then>
+    <f:else>
+      <f:for each="{files}" as="file">
+        <f:render section="item" arguments="{file: file, data: data}" />
+      </f:for>
+    </f:else>
+  </f:if>
+  <v:asset.script>
+    $(document).on('click', '[rel^="lightbox["]', function(event) {
+      event.preventDefault();
+      $(this).ekkoLightbox({
+        onShown: function() {
+            console.log('Checking our the events huh?');
+        },
+        onContentLoaded: function() {
+            console.log('Checking our the events huh?');
+        },
+      });
+    });
+  </v:asset.script>
+</div>
+
+<f:section name="item">
+    <div class="col-lg-3 col-md-4 col-6">
+        <a href="{f:uri.image(image: file, maxWidth: 1200, maxHeight: 800)}"
+            rel="lightbox[gallery_{data.uid}]"
+            data-gallery="gallery_{data.uid}"
+            disable-external-check="true"
+            class="d-block mb-4 h-100"
+            title="{file.properties.description}">
+
+            <fl:thumbnail class="img-fluid img-thumbnail" image="{file}" width="256c" height="256c" />
+            <div class="text-center img-details">
+                <f:if condition="{file.properties.description}">
+                    <f:then>{file.properties.description}</f:then>
+                    <f:else>
+                        <f:if condition="{file.properties.title}">
+                            <f:then>{file.properties.title}</f:then>
+                            <f:else>{file.name}</f:else>
+                        </f:if>
+                    </f:else>
+                </f:if>
+              </div>
+        </a>
+  </div>
+</f:section>

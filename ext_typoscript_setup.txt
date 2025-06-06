@@ -1,0 +1,11 @@
+config.tx_extbase {
+	persistence {
+		classes {
+			Goran\CeGallery\Domain\Model\MediaAlbum {
+				mapping {
+					tableName = sys_file_collection
+				}
+			}
+		}
+	}
+}

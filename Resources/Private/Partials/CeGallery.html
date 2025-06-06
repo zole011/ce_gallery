@@ -1,0 +1,321 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+{namespace fl=Causal\FileList\ViewHelpers}
+{namespace g=Goran\Pep\ViewHelpers}
+
+<f:comment>
+  <f:debug>{_all}</f:debug>
+</f:comment>
+
+<header>
+   <h2 class="pb-1 mb-2 mb-md-4 border-bottom mt-sm-2 mt-md-0">
+    <f:if condition="{settings.showFolderList} == '0' || {parent}">
+      <f:then>
+        <f:format.case>
+          <f:comment><f:translate key="LLL:EXT:ce_gallery/Resources/Private/Language/frontend.xlf:images_list" /></f:comment>
+        </f:format.case>
+      </f:then>
+      <f:else>
+        <f:format.case>
+          <f:comment><f:translate key="LLL:EXT:ce_gallery/Resources/Private/Language/frontend.xlf:galleries_list" /></f:comment>
+        </f:format.case>
+      </f:else>
+    </f:if>
+  </h2>
+    <f:if condition="{item.properties.description} == '0' || {parent}">
+      <f:then>
+        <f:comment><f:format.case>{item.webdescription}</f:format.case></f:comment>
+      </f:then>
+      <f:else>
+        <f:format.case>
+          <f:comment><f:format.case>{v:page.info(field:'title')}</f:format.case></f:comment>
+        </f:format.case>
+      </f:else>
+	</f:if>
+	
+	<f:if condition="{collectionFileList}">
+		<f:comment><h2>{collectionData.title}</h2></f:comment>
+	    <f:link.page pageUid="{data.pid}">
+          <button type="button" class="btn btn-default"><f:translate key="LLL:EXT:ce_gallery/Resources/Private/Language/frontend.xlf:back_to_galleries" /></button>
+        </f:link.page>
+	</f:if>
+</header>
+<f:if condition="{settings.showFolderList} == '0' || {parent}">
+  <f:then>
+    <f:variable name="filtered" value="{g:FilterFiles(files='{files}', allowed='{settings.allowedExtensions}')}" />
+    <f:render section="pager" arguments="{items: filtered, data: data, section: 'file'}" />
+    <f:if condition="{parent}">
+      <div class="border-top mt-4 pt-4">
+        <f:link.page pageUid="{data.pid}">
+          <f:translate key="LLL:EXT:ce_gallery/Resources/Private/Language/frontend.xlf:back_to_galleries" />
+        </f:link.page>
+      </div>
+    </f:if>
+  </f:then>
+  <f:else>
+    <f:if condition="{settings.mode} == 'FILE_COLLECTIONS'">
+      <f:then>
+        <f:if condition="{collectionFileList}">
+          <f:then>
+              <f:render section="pager" arguments="{items: files, data: data, section: 'collectionFiles', title: collectionData.title}" />
+          </f:then>
+          <f:else>
+            <f:render section="pager" arguments="{items: collections, data: data, section: 'collection'}" />
+          </f:else>
+        </f:if>
+      </f:then>
+      <f:else>
+        <f:render section="pager"
+          arguments="{items: '{g:FilterFolders(folders:\'{folders}\')}', data: data, section: 'folder'}" />
+      </f:else>
+    </f:if>
+  </f:else>
+</f:if>
+
+<f:section name="folder">
+  <!-- show only folders with images !-->
+  <f:if condition="{item.files -> f:count()} > 1">
+    <f:variable name="info" value="{g:getGalleryInfo(folder:'{item}')}" />
+    <div class="col text-center">
+      <f:if condition="{info.description}">
+        <f:then>
+          <f:variable name="popover"
+            value="{placement: 'bottom', toggle: 'popover', trigger: 'hover', content: '{info.description}'}" />
+        </f:then>
+        <f:else>
+          <f:variable name="popover" value='{}' />
+        </f:else>
+      </f:if>
+      <f:link.action class="d-inline-block" action="list" arguments="{path: '{g:base64Encode(value:item.identifier)}'}"
+        data="{popover}">
+        <f:image src="EXT:ce_gallery/Resources/Public/folder.svg" alt="alt text" width="200" />
+        <div class="text-center img-details" data-link="{item.identifier}" data-linke="{g:base64Encode(value:item.identifier)}">
+          <f:if condition="{info.title}">
+            <span class="title">
+              {info.title}
+            </span>
+          </f:if>
+        </div>
+      </f:link.action>
+    </div>
+  </f:if>
+</f:section>
+
+<f:section name="collectionFiles">
+    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 galleries_files">
+	  <div class="gallery-img">
+        <a href="{f:uri.image(image: item, maxWidth: 1200, maxHeight: 800)}" rel="lightbox[gallery_{index}]"
+          data-gallery="gallery_{index}" disable-external-check="true" class="d-block mb-4 h-100"
+          title="{item.properties.description}"
+          data-size="1200x800">
+
+          <f:image class="img-fluid img-thumbnail" image="{item}" width="256c" height="256c" />
+          <div class="img-details hover-effect">
+            <f:if condition="{item.properties.description}">
+              <f:then><h2>{item.properties.description}</h2></f:then>
+              <f:else>
+			   <h2>{title}</h2>
+		   <!-- <f:if condition="{item.properties.title}">
+                  <f:then>{item.properties.title}</f:then>
+                  <f:else>{item.name}</f:else>
+                </f:if> -->
+              </f:else>
+            </f:if>
+          </div>
+        </a>
+	  </div>
+    </div>
+      <f:render section="advanced" />
+</f:section>
+
+<f:section name="collection">
+  <f:if condition="{item.assetsCount} > 1">
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 gallery_list">
+      <f:if condition="{item.webdescription}">
+        <f:then>
+          <f:variable name="popover"
+            value="{placement: 'bottom', toggle: 'popover', trigger: 'hover', content: '{item.webdescription}'}" />
+        </f:then>
+        <f:else>
+          <f:variable name="popover" value='{}' />
+        </f:else>
+      </f:if>
+      <f:link.action class="d-inline-block gallery_list_thumb" action="list" arguments="{collection: item.uid}" data="{popover}">
+        <f:if condition="item.mainAsset">
+          <f:then>
+              <f:image image="{item.mainAsset}" alt="alt text" width="200" height="200c" style="float:left;"/>
+          </f:then>
+          <f:else>
+            <f:image src="EXT:ce_gallery/Resources/Public/folder.svg" alt="alt text" width="200" />
+          </f:else>
+        </f:if>
+        <div class="img-details" data-link="{item.uid}">
+          <f:if condition="{item.title}">
+            <span class="title">
+              {item.title}
+            </span>
+			<span class="data">
+              <f:format.date format="%d. %B %Y">{item.tstamp}</f:format.date>
+           </span>
+          </f:if>
+        </div>
+      </f:link.action>
+    </div>
+  </f:if>
+</f:section>
+
+<f:section name="file">
+  <div class="col text-center">
+    <a href="{f:uri.image(image: item, maxWidth: 1200, maxHeight: 800)}" rel="lightbox[gallery_{index}]"
+      data-gallery="gallery_{index}" disable-external-check="true" class="d-block mb-4 h-100"
+      title="{item.properties.description}"
+      data-size="1200x800">
+
+      <f:image class="img-fluid img-thumbnail" image="{item}" width="256c" height="256c" />
+      <div class="text-center img-details">
+        <f:if condition="{file.properties.description}">
+          <f:then>{item.properties.description}</f:then>
+          <f:else>
+            <f:if condition="{file.properties.title}">
+              <f:then>{item.properties.title}</f:then>
+              <f:else>{item.name}</f:else>
+            </f:if>
+          </f:else>
+        </f:if>
+      </div>
+    </a>
+  </div>
+  <f:render section="{settings.slideShowType}" />
+</f:section>
+
+<f:section name="pager">
+  <div class="row">
+    <f:if condition="{settings.paging} == '0'">
+      <f:then>
+        <f:for each="{items}" as="item" iteration="pageriter">
+          <f:render section="{section}"
+            arguments="{item: item, data: data, index: pageriter.index, last: pageriter.isLast, title: title}" />
+        </f:for>
+      </f:then>
+      <f:else>
+        <f:if condition="{f:count(subject: items)} > {settings.paging}">
+          <f:then>
+            <f:switch expression="{section}">
+              <f:case value="collectionFiles">
+                <f:for each="{items}" as="item" iteration="pageriter">
+                  <f:render section="{section}"
+                    arguments="{item: item, data: data, index: pageriter.index, last: pageriter.isLast, title: title}" />
+                </f:for>
+
+                 <f:comment>
+                 <f:widget.paginate objects="{items}" as="paginatedItems"
+                  configuration="{itemsPerPage: '{settings.paging}', insertAbove: 0, insertBelow: 1, maximumNumberOfLinks: 10}">
+                  <f:for each="{paginatedItems}" as="item" iteration="pageriter">
+                    <f:render section="collectionFiles"
+                    arguments="{item: item, data: data, index: pageriter.index, last: pageriter.isLast}" />
+                  </f:for>
+                </f:widget.paginate>
+              </f:comment>
+              </f:case>
+              <f:case value="collection">
+                <f:widget.paginate objects="{items}" as="paginatedItems"
+                configuration="{itemsPerPage: '{settings.paging}', insertAbove: 0, insertBelow: 1, maximumNumberOfLinks: 10}">
+                <f:for each="{paginatedItems}" as="item" iteration="pageriter">
+                  <f:render section="collection"
+                    arguments="{item: item, data: data, index: pageriter.index, last: pageriter.isLast}" />
+                </f:for>
+              </f:widget.paginate>
+              </f:case>
+              <f:defaultCase>
+                <f:widget.paginate objects="{items}" as="paginatedItems"
+                configuration="{itemsPerPage: '{settings.paging}', insertAbove: 0, insertBelow: 1, maximumNumberOfLinks: 10}">
+                <f:for each="{paginatedItems}" as="item" iteration="pageriter">
+                  <f:render section="folder"
+                    arguments="{item: item, data: data, index: pageriter.index, last: pageriter.isLast}" />
+                </f:for>
+              </f:widget.paginate>
+              </f:defaultCase>
+           </f:switch>
+          </f:then>
+          <f:else>
+            <f:for each="{items}" as="item" iteration="pageriter">
+              <f:render section="{section}"
+                arguments="{item: item, data: data, index: pageriter.index, last: pageriter.isLast}" />
+            </f:for>
+          </f:else>
+        </f:if>
+      </f:else>
+    </f:if>
+  </div>
+</f:section>
+
+<f:section name="simple">
+    <v:asset.script>
+      $(document).on('click', '[rel^="lightbox["]', function(event) {
+      event.preventDefault();
+      $(this).ekkoLightbox();
+      });
+    </v:asset.script>
+</f:section>
+
+<f:section name="advanced">
+  <f:render partial="LightGallery" />
+</f:section>
+
+<f:section name="VSPEPGallery">
+<div class="test"><h2>GALLERY ENG</h2></div>
+
+</f:section>
+
+<f:comment>
+  <![CDATA[
+    <f:if condition="{settings.showSlideshow">
+        <f:then>
+          <f:variable name="filtered"
+            value="{g:FilterFiles(files:'{item.files}', allowed:'{settings.allowedExtensions}')}" />
+          <f:for each="{filtered}" as="image" iteration="iter">
+            <f:if condition="{iter.isFirst}">
+              <f:then>
+                <a href="{f:uri.image(image: image, maxWidth: 1200, maxHeight: 800)}" rel="lightbox[gallery_{index}]"
+                  data-gallery="gallery_{index}" disable-external-check="true" class="d-block mb-4 h-100"
+                  title="{item.properties.description}">
+                  <f:image src="EXT:ce_gallery/Resources/Public/folder.svg" alt="alt text" width="200" />
+                  <div class="text-center img-details">
+                    <f:if condition="{info.title}">
+                      <span class="title">
+                        {info.title}
+                      </span>
+                    </f:if>
+                  </div>
+                </a>
+              </f:then>
+              <f:else>
+                <div class="d-none" rel="lightbox[gallery_{index}]" data-gallery="gallery_{index}"
+                  data-remote="{f:uri.image(image: image, maxWidth: 1200, maxHeight: 800)}">
+                </div>
+              </f:else>
+            </f:if>
+          </f:for>
+          <f:if condition="{last}">
+            <f:render section="{settings.slideShowType}" />
+          </f:if>
+        </f:then>
+        <f:else>
+          <f:link.action class="d-inline-block" action="list"
+            arguments="{path: '{g:base64Encode(value:item.identifier)}'}" data="{popover}">
+            <f:image src="EXT:ce_gallery/Resources/Public/folder.svg" alt="alt text" width="200" />
+            <div class="text-center img-details">
+              <f:if condition="{info.title}">
+                <span class="title">
+                  {info.title}
+                </span>
+              </f:if>
+            </div>
+          </f:link.action>
+        </f:else>
+      </f:if>
+
+      <fl:thumbnail class="img-fluid img-thumbnail"
+      image="{g:getFirstFile(array='{item.files}', allowed='{settings.allowedExtensions}')}" width="256c" height="256c" />
+
+]]>
+</f:comment>
